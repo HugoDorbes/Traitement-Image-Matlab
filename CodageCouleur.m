@@ -1,3 +1,9 @@
+%Codage d'image couleur
+%Première partie: histogramme
+%Deuxième partie: Drapeaux
+%troisième partie: cercle de couleur
+
+
 clear all, close all, clc ;
 
 %% Image d'internet
@@ -27,7 +33,7 @@ clear all, close all, clc ;
 % figure, Hm=histogram(I); title(' hist image')
 % 
 % 
-% %% Drapeau fran�ais
+% %% Drapeau français
 % 
  N=300;
  M=500;
