@@ -1,3 +1,6 @@
+%Application transform√©e de Fourier pour isoler une autre partie de l'image
+
+
 clear, close all, clc
 
 %% Parametres
@@ -21,13 +24,13 @@ figure, imagesc(Img), colormap gray; title('TF log-log de l image') ;   % On aff
 
 
 %% filtre
-taille = size(Img);   % On relËve les dimensions de la matrice
+taille = size(Img);   % On rel√®ve les dimensions de la matrice
 ligne = taille(1);
 colonne=taille(2);
-mask = zeros(size(Img));       % On crÈÈ un masque pour enlever des frÈquences
+mask = zeros(size(Img));       % On cr√©√© un masque pour enlever des fr√©quences
 x = ligne / 2;
 y = colonne / 2;
-%alpha = pi / 1.33;
+
 alpha = pi / 1.329;
 delt_alpha = 0.9* pi / 180;
 
@@ -55,13 +58,13 @@ end
 figure, imagesc(mask), title('image du masque');
 
 %% on applique le masque
-Img_filtre = (mask).*double(I_FFT); % On applique le masque ‡ l'image de la TF
+Img_filtre = (mask).*double(I_FFT); % On applique le masque √† l'image de la TF
 %figure, imagesc(abs(Img_filtre)); title('log log masque') 
 
 %% TF inverse
 Img_filtre = ifftshift(Img_filtre);
 Img_inverse = real(ifft2(Img_filtre));
-figure, imagesc(Img_inverse), title('image aprËs TF inverse');  
+figure, imagesc(Img_inverse), title('image apr√®s TF inverse');  
 
 %% coutour
 h=fspecial('sobel');
