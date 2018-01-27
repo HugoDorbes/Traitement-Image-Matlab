@@ -1,37 +1,36 @@
+%Utilisation de la transformÃ©e de Fourier pour extraire une partie de l'image
+
 clear, close all, clc
 
-%% Parametres
-
-R = 20;
 
 %% Image
 
 Img_champs = imread('champs.png'); % On charge l'image du champs
 figure, imshow(Img_champs), title('image originale');           % On affiche cette derniere
 
-Img = rgb2gray(Img_champs);           % On convertit l'image couleur en nuance de gris
-%figure, imshow(Img), title('image en nuance de gris');
+Img = rgb2gray(Img_champs);   % On convertit l'image couleur en nuance de gris
+figure, imshow(Img), title('image en nuance de gris');
 
 %% spectre
-I_FFT = fft2(Img);             % On calcule la fft de l'image
+I_FFT = fft2(Img);      % On calcule la fft de l'image
 I_FFT = fftshift(I_FFT);
-I_FFT_spectre = abs(I_FFT);
-Img=log(I_FFT_spectre);
+I_FFT_spectre = abs(I_FFT); 
+Img=log(I_FFT_spectre); % spectre de l'image
 figure, imagesc(Img), colormap gray; title('TF log-log de l image') ;   % On affiche la fft
 
 
 %% filtre
-taille = size(Img);   % On relève les dimensions de la matrice
+taille = size(Img);   % On relÃ¨ve les dimensions de la matrice
 ligne = taille(1);
 colonne=taille(2);
-mask = zeros(size(Img));       % On créé un masque pour enlever des fréquences
+mask = zeros(size(Img));       % On crÃ©Ã© un masque pour enlever des frÃ©quences
 x = ligne / 2;
 y = colonne / 2;
 alpha = pi / 3.150;
 delt_alpha = 6 * pi / 180;
 
 %% boucle remplissage diagonal filtre
-
+R = 20;
 for m = 1:ligne
     for n = 1: colonne
         theta = (atan2(n-y,m-x)+pi);
@@ -51,16 +50,16 @@ for m = 1:ligne
     end
 end
 
-%figure, imagesc(mask), title('image du masque');
+figure, imagesc(mask), title('image du masque');
 
 %% on applique le masque
-Img_filtre = (mask).*double(I_FFT); % On applique le masque à l'image de la TF
-%figure, imagesc(abs(Img_filtre)); title('log log masque') 
+Img_filtre = (mask).*double(I_FFT); % On applique le masque Ã  l'image de la TF
+figure, imagesc(abs(Img_filtre)); title('log log masque') 
 
 %% TF inverse
 Img_filtre = ifftshift(Img_filtre);
 Img_inverse = real(ifft2(Img_filtre));
-figure, imagesc(Img_inverse), title('image après TF inverse');  
+figure, imagesc(Img_inverse), title('image aprÃ¨s TF inverse');  
 
 %% coutour
 h=fspecial('sobel');
@@ -86,7 +85,7 @@ Fin_HSV=rgb2hsv(Champ);
 figure; imagesc(Fin_HSV);
 
 
-Fin_HSV(:, :, 2) = Fin_HSV(:, :, 2) * 1.5;
+Fin_HSV(:, :, 2) = Fin_HSV(:, :, 2) * 1.5; % on augmente la saturation
 Fin_HSV(Fin_HSV > 1) = 1;
 Fin_RGB = hsv2rgb(Fin_HSV);
 figure;
