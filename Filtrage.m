@@ -1,3 +1,9 @@
+% Utilisation des différents filtres
+%Première partie: isolation étoiles les plus brillantes
+%Deuxième partie: filtre Laplace et Lplace-Gauss
+%Troisème partie: filtre Sobel, moyen et Prewit
+
+
 close all; clear all; clc;
 
 %B=imread('mercure.jpg');
@@ -20,13 +26,13 @@ r1=imfilter(C1,h);
 figure;imshow(r1);
 imwrite(r1,'Etoiles2.jpg');
 
-% Seconde it�ration du processus
+% Seconde itération du processus
 C2 = (r1(:,:,:)>0.80); 
 r2=imfilter(C2,h);
 figure;imshow(r2);
 imwrite(r2,'Etoiles3.jpg');
 
-% troisi�me it�ration du processus
+% troisième itération du processus
 C3 = (r2(:,:,:)>0.80);
 r3=imfilter(C3,h);
 figure;imshow(r3);
