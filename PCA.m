@@ -1,3 +1,6 @@
+% m√©thode PCA dans le cadre classe non supervis√©
+
+
 clear all, close all, clc;
 
 %% Image
@@ -16,19 +19,19 @@ ID_mean = mean(ID);   %Moyenne
 ID_mean2 = repmat(ID_mean,a,1); %Copie de ID_mean ax1
 ID_Adjust = ID - ID_mean2; %ajustement
 C = cov(ID_Adjust);   %convariance de l'ajustement
-[V, D] = eig(C); %matrice diagonale D (valeurs propres) + une matrice complËte V  (vecteurs propres)
-V_trans = transpose(V); %transposÈ de V
-ID_Adjust_trans = transpose(ID_Adjust);  %transposÈ de l'ajustement
+[V, D] = eig(C); %matrice diagonale D (valeurs propres) + une matrice compl√®te V  (vecteurs propres)
+V_trans = transpose(V); %transpos√© de V
+ID_Adjust_trans = transpose(ID_Adjust);  %transpos√© de l'ajustement
 
 FinalData = V_trans * ID_Adjust_trans;   
 figure, imshow(FinalData)
   
-%% DÈbut du code PCA inverse
+%% D√©but du code PCA inverse
 OriginalData_trans = inv(V_trans) * FinalData;                         
 OriginalData = transpose(OriginalData_trans) + ID_mean2;           
 figure, 
 
-imshow(OriginalData), title('Image RecupÈrÈ')       
+imshow(OriginalData), title('Image Recup√©r√©')       
  
   
 %% Image compression 
@@ -46,6 +49,6 @@ Compressed_Data=Reduced_V*Y;
 Compressed_Data = Compressed_Data' + ID_mean2;
 
 figure,                                                                
-imshow(Compressed_Data); title('Image compressÈe')
+imshow(Compressed_Data); title('Image compress√©e')
 imwrite(Compressed_Data,'im_comp300.jpg')
 
