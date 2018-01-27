@@ -1,3 +1,6 @@
+% M√©thode K-Means dans le cadre des classification non supervis√©
+
+
 clear all; close all; clc;
 
 
@@ -12,12 +15,12 @@ I = reshape(I,lignes*colonnes,2);
 
 nColors = 3; %Nbres de couleur
 
-% rÈpÈtez le clustering 3 fois pour Èviter les minima locaux
-% Distance Euclidienne au carrÈ, chaque centroÔde est la moyenne des points de ce groupe. 
+% r√©p√©tez le clustering 3 fois pour √©viter les minima locaux
+% Distance Euclidienne au carr√©, chaque centro√Øde est la moyenne des points de ce groupe. 
 [cluster_idx, cluster_center] = kmeans(I,nColors,'distance','sqEuclidean', 'Replicates',3);
 
 pixel_labels = reshape(cluster_idx,lignes,colonnes); % on reforme l' image
-figure, imshow(pixel_labels,[]), title('image ÈtiquetÈe par index de cluster');
+figure, imshow(pixel_labels,[]), title('image √©tiquet√©e par index de cluster');
 
 segmented_images = cell(1,3); 
 rgb_label = repmat(pixel_labels,[1 1 3]);
