@@ -1,12 +1,16 @@
+%Classification supervisÃ©
+%Isolement de la plage, des vagues, de la mer et de la vÃ©gÃ©tatio,
+
 clear all, close all, clc;
 
-I = imread('SpainBeach.jpg');
+I = imread('SpainBeach.jpg'); %Image de la plge en Espagne
 figure, imshow(I), title('Image initiale')
 
 I = double(I);
 [U,V,n] = size(I);
 
-DataBase = [
+% crÃ©ation des databases pour les diffÃ©rentes parties
+DataBase = [     
     115 87 75 1; %plage 
     125 92 77 1;
     122 90 72 1;
@@ -32,7 +36,7 @@ DataBase = [
     161 187 186 3;
     157 200 206 3;
     
-    111 126 103 4;; %végétation
+    111 126 103 4;; %vÃ©gÃ©tation
     104 106 105 4;
     96 90 90 4;
     100 106 106 4;
@@ -40,9 +44,9 @@ DataBase = [
     95 95 93 4;
     ]
 
-NbData = size(DataBase,1); %taille de nos données
-Classe = DataBase(:,4); % Classe en colonne 4
-Pix = DataBase(:,1:3); %Pixel en colonne 1 à 3
+NbData = size(DataBase,1); %taille de nos donnÃ©es
+Classe = DataBase(:,4); % Classe = colonne 4
+Pix = DataBase(:,1:3); %Pixel = colonne 1 Ã  3
 
 MaskImg = zeros(U,V);
 for u = 1:U
@@ -51,7 +55,7 @@ for u = 1:U
         vert = I(u,v,2); % pixels vert
         bleu = I(u,v,3); % pixels bleu
         
-        RGB = repmat([rouge vert bleu], NbData, 1); % Création matrice
+        RGB = repmat([rouge vert bleu], NbData, 1); % CrÃ©ation matrice
         D = (RGB - Pix).^2; % Distance entre les pixels dans chaque classe
         
         [valeur,position] = min(sum(D') );
@@ -63,28 +67,10 @@ end
         
 figure, imshow(MaskImg==1), title('Plage'); imwrite(MaskImg==1,'plage.jpg');
 figure, imshow(MaskImg==2), title('Mer'); imwrite(MaskImg==2,'mer.jpg');
-figure, imshow(MaskImg==3), title('Vague') ;   imwrite(MaskImg==3,'vague.jpg');   
-figure, imshow(MaskImg==4), title('Végétation')   ;  imwrite(MaskImg==4,'végétation.jpg');   
+figure, imshow(MaskImg==3), title('Vague') ; imwrite(MaskImg==3,'vague.jpg');   
+figure, imshow(MaskImg==4), title('VÃ©gÃ©tation') ; imwrite(MaskImg==4,'vÃ©gÃ©tation.jpg');   
  
 
-C(:,:,1)=(MaskImg==3).*(I(:,:,1));
-C(:,:,2)=(MaskImg==3).*(I(:,:,2));
-C(:,:,3)=(MaskImg==3).*(I(:,:,3));
-
-plage(:,:,1)=(C(:,:,1));
-plage(:,:,2)=(C(:,:,2));
-plage(:,:,3)=(C(:,:,3));
-
-Fin_HSV=rgb2hsv(plage);
-figure; imagesc(Fin_HSV);
-
-
-Fin_HSV(:, :, 2) = Fin_HSV(:, :, 2) * 1.5;
-
-Fin_HSV(Fin_HSV > 1) = 1;
-Fin_RGB = hsv2rgb(Fin_HSV);
-figure;
-imshow(Fin_RGB);
 
 
             
