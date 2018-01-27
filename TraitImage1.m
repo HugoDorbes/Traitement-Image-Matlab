@@ -1,13 +1,19 @@
+%Codage d'image en boir et blanc ou avec nuance de gris
+%PremiÃ¨re partie: conversion RGB en nuance de gris
+%DeuxiÃ¨me partie: CrÃ©ation image avec formes gÃ©omÃ©triques et dÃ©gradÃ© gris
+
+
+
 clear all, close all, clc ;
 
 %% Basics
 
 I=imread('mountains.jpg');
 figure
-imshow(I); title('Image montagnes Couleur')
-Y=rgb2gray(I);
+imshow(I); title('Image montagnes Couleur') %image originale
+Y=rgb2gray(I); %conversion en nuance de gris
 figure
-imshow(Y); title('Image montagnes grise')
+imshow(Y); title('Image montagnes grise')  %image en nuance de gris
 
 
 %% Parametres
@@ -18,7 +24,7 @@ W=100;
 R=100;
 
 
-%% Création des images
+%% CrÃ©ation des images
 p1=zeros(N,M) ;      
 p2=zeros(N,M) ;      
 p3=zeros(N,M) ;
@@ -28,7 +34,7 @@ p6=zeros(N,M) ;
 p7=zeros(N,M) ;
 
 
-% Création image rayée N/B
+% CrÃ©ation image rayÃ©e N/B
 for i=1:N
    r = rem(i,B)
    if (r/B) > 0.5
@@ -37,7 +43,7 @@ for i=1:N
    end
 end
 
-% Création bande grise centre image
+% CrÃ©ation bande grise centre image
 for i=1:N
     for j=1:M
         if (i > N/2 - W) && (i < N/2 + W)
@@ -46,10 +52,10 @@ for i=1:N
     end
 end
 
-%Création carré au centre de l'image
+%CrÃ©ation carrÃ© au centre de l'image
 p4(N/2-B:N/2+B,M/2-B:M/2+B)=1;
 
-%Création cercle au centre de l'image
+%CrÃ©ation cercle au centre de l'image
 % p5(N/2,M/2)=1;
 % SE=strel('sphere',B);
 % p5=imdilate(p5,SE);
@@ -58,14 +64,14 @@ for i = 0:R
    
 end
 
-%Création image dégradé avec bande grise
+%CrÃ©ation image dÃ©gradÃ© avec bande grise
 for i=1:N 
     p6(:,1)=1;
     p6(:,i+1)=p6(:,i)-1/N;   
 end
 p6(N/2-B:N/2+B,:)=0.5;
 
-%création image losange au centre
+%crÃ©ation image losange au centre
 for i=0:R
     p7(N/2-i:N/2+i,M/2-(R-i):M/2+(R-i))=1;
     
@@ -94,25 +100,3 @@ imwrite(p6,'imageDegrade.png');
 figure
 imshow(p7);
 imwrite(p7,'imageLosange.png');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-
-
